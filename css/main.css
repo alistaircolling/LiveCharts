@@ -20,7 +20,17 @@ body, html {
 
 h1{
   font-size:40px;
+  text-align: center;
   color:#ffffff;
+}
+
+a{
+  display:block;
+  text-align:center;
+  font-weight:bold;
+  bottom:100px;
+  font-size:40px;
+  color:#0000ff;
 }
 
 h2{
@@ -37,11 +47,13 @@ svg {
    right: 0;
 }
 audio{
-  width:600px;
+  padding-top:30px;
+  width: 100%;
 }
-#totals{
+
+#total{
   position: absolute;
-  top: 15em;
+  top: 20em;
   padding-left:0px;
   width:800px;
   bottom: 0;
@@ -52,6 +64,7 @@ audio{
 #winningImage{
   position: absolute;
   padding-left:0px;
+    top: 20em;
   bottom: 0;
   left:0;
   margin-left:0px;
@@ -59,11 +72,12 @@ audio{
 }
 #holder{
   position: absolute;
-  top: 15em;
-  padding-left:0px;
+  top: 20em;
+  padding-left:auto;
+  padding-right:auto;
   width:800px;
   bottom: 0;
   left:0;
-  margin-left:0px;
+  margin-left:auto;
   margin-right: auto ;
 }

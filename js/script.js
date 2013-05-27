@@ -1,4 +1,4 @@
-var custom_colors =["#ff0000","#00ff00","#0000ff","#ff6600","#ff00ff","#00ffff"];
+var custom_colors =["#ff0000","#00ff00","#0000ff","#ffdc3d","#ff00ff","#00ffff"];
 var bdata,bars,c , counter, dataInterval, totals;
 //COPY VARS
 var text1,text2,text3,text4,text5;
@@ -19,7 +19,7 @@ window.onload = function () {
   counter = 0;
   bdata = [[1],[1],[1],[1],[1]];
   winningImage = Raphael("winningImage");
-  totals = Raphael("totals");
+  totals = Raphael("total");
   bars = Raphael("holder");
   c = bars.barchart(10, 10, 800, 450, bdata, { colors:custom_colors, stretch:false, labels:[["one"], ["two"], ["3"], ["4"], ["5"]]});
   addLabels();
@@ -77,11 +77,10 @@ function showImage(index){
     var width = myImg.width;
     var height = myImg.height;
     var scale = 1.5; // for example
-
     winningImage = Raphael(0,0,1000, 1000);  // or whatever other size
     winningImage.image(dynamicUrl, 100, 200, width*scale, height*scale); // scale image
         // after the image is in the viewer you can use .scale()
-}
+  }
 
 
 }
@@ -102,7 +101,7 @@ function updateTotals(){
   var startY = 380;
   var currentLabel;
   totals.remove();
-  totals = Raphael("totals"), txtattr = { font: "12px sans-serif" };
+  totals = Raphael("total");
   for(i=0; i<bdata.length; i++){
     currentLabel = eval("total"+(i+1));
     if(currentLabel != undefined){currentLabel.remove()}
@@ -130,7 +129,7 @@ function loadData(){
     b_animate();
     updateTotals();
     //load data again in 500ms
-    dataInterval = setInterval( function(){loadData();},1000);
+    dataInterval = setInterval( function(){loadData();},200);
   });
 
 
