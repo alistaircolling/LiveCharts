@@ -1,0 +1,58 @@
+
+
+/*********************************************
+ * GLOBAL
+ *********************************************/
+
+body, html {
+	overflow: hidden;
+	font-family: Helvetica, Arial, sans-serif;
+	color: #ffffff;
+	font-size: 14px;
+	background: #111;
+
+
+  background-color:#cccccc;
+  padding-left:0px;
+  padding-top:20px;
+	-webkit-user-select: none;
+}
+
+h1{
+  font-size:40px;
+  color:#ffffff;
+}
+
+h2{
+  font-size:30px;
+  color:#FF00ff;
+
+}
+
+svg {
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+}
+#totals{
+  position: absolute;
+  top: 15em;
+  padding-left:0px;
+  width:800px;
+  bottom: 0;
+  left:0;
+  margin-left:0px;
+  margin-right: auto ;
+}
+#holder{
+  position: absolute;
+  top: 15em;
+  padding-left:0px;
+  width:800px;
+  bottom: 0;
+  left:0;
+  margin-left:0px;
+  margin-right: auto ;
+}
