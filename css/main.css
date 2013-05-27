@@ -36,11 +36,22 @@ svg {
    left: 0;
    right: 0;
 }
+audio{
+  width:600px;
+}
 #totals{
   position: absolute;
   top: 15em;
   padding-left:0px;
   width:800px;
+  bottom: 0;
+  left:0;
+  margin-left:0px;
+  margin-right: auto ;
+}
+#winningImage{
+  position: absolute;
+  padding-left:0px;
   bottom: 0;
   left:0;
   margin-left:0px;

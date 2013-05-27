@@ -1,31 +1,92 @@
 var custom_colors =["#ff0000","#00ff00","#0000ff","#ff6600","#ff00ff","#00ffff"];
 var bdata,bars,c , counter, dataInterval, totals;
-
-
-window.onload = function () {
-  counter = 0;
-  bdata = [[1],[1],[1],[1],[1]];
- totals = Raphael("totals"), txtattr = { font: "12px sans-serif" };
-  bars = Raphael("holder"), txtattr = { font: "12px sans-serif" };
-  c = bars.barchart(10, 10, 800, 450, bdata, { colors:custom_colors, stretch:false, labels:[["one"], ["two"], ["3"], ["4"], ["5"]]});
-  addLabels();
-  updateTotals();
-  loadData();
-  addButtonListener();
-
-};
-
+//COPY VARS
 var text1,text2,text3,text4,text5;
 var total1,total2,total3,total4,total5;
-var totalCopy;
+var totalCopy; //raphael holder
+var winningImage, winImage;
+var textAttributes =  {'text-anchor': 'middle', 'font-size':26, 'font-weight':'bold'};
+var totalTextAttributes =  {'text-anchor': 'middle', 'font-size':80, 'font-weight':'bold', 'fill':'#ffffff'};
 var copy1 = "DOUG\nCOPTER";
 var copy2 = "TOILET\nTEXTS";
 var copy3 = "CHARITY\nTRAX";
 var copy4 = "OPTION\nFOUR";
 var copy5 = "OPTION\nFIVE";
+var images = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg"];
 
-var textAttributes =  {'text-anchor': 'middle', 'font-size':26, 'font-weight':'bold'};
-var totalTextAttributes =  {'text-anchor': 'middle', 'font-size':80, 'font-weight':'bold', 'fill':'#ffffff'};
+
+window.onload = function () {
+  counter = 0;
+  bdata = [[1],[1],[1],[1],[1]];
+  winningImage = Raphael("winningImage");
+  totals = Raphael("totals");
+  bars = Raphael("holder");
+  c = bars.barchart(10, 10, 800, 450, bdata, { colors:custom_colors, stretch:false, labels:[["one"], ["two"], ["3"], ["4"], ["5"]]});
+  addLabels();
+  updateTotals();
+//  loadData();
+  addKeyListener();
+  addMP3Listener();
+  //addButtonListener();
+
+};
+
+function addMP3Listener(){
+  $("#audioPlayer").bind('ended', function(){
+    console.log("player ended");
+    clearInterval(dataInterval);
+    showImage(calculateWinner())
+  });
+  $("#audioPlayer").bind('playing', function(){
+    console.log("player started");
+    loadData();
+  });
+}
+
+function calculateWinner(){
+  var topVal, winningIndex, i;
+  topVal = 0;
+  winningIndex = 0;
+  for(i=0; i<bdata.length; i++){
+    var currVal = bdata[i][0];
+    if (currVal>topVal){
+      topVal = currVal;
+      winningIndex = i;
+    }
+  }
+  return winningIndex;
+
+}
+function addKeyListener(){
+  document.onkeypress = function(e) {
+    e = e || window.event;
+    console.log(e.keyCode);
+    var imgIndexToAdd = e.keyCode-49;
+    showImage(imgIndexToAdd);
+  }
+
+}
+
+function showImage(index){
+  console.log("showImage:"+index);
+  winningImage.remove();
+  var dynamicUrl = "images/"+images[index];
+  var myImg = new Image();
+  myImg.src = dynamicUrl;
+  myImg.onload = function() {
+    var width = myImg.width;
+    var height = myImg.height;
+    var scale = 1.5; // for example
+
+    winningImage = Raphael(0,0,1000, 1000);  // or whatever other size
+    winningImage.image(dynamicUrl, 100, 200, width*scale, height*scale); // scale image
+        // after the image is in the viewer you can use .scale()
+}
+
+
+}
+
+
 function addLabels(){
   var myLabels = ["one", "two", "3", "4", "5"];
   text1 = bars.text(175, 480, copy1).attr( textAttributes); text1.attr('fill',custom_colors[0]);
@@ -46,19 +107,16 @@ function updateTotals(){
     currentLabel = eval("total"+(i+1));
     if(currentLabel != undefined){currentLabel.remove()}
     currentLabel =  totals.text(startX+(i*115), startY, bdata[i][0]-1).attr( totalTextAttributes);
-    console.log("CL:"+currentLabel);
 
   }
 }
 
 function loadData(){
-  console.log("reload data");
   clearInterval(dataInterval);
   var url = "https://spreadsheets.google.com/feeds/cells/0AmSovoaAS4VbdEV1LUlCTTVSeVFZYTM3eU9tb3d3TUE/od6/private/";
   var googleSpreadsheet = new GoogleSpreadsheet();
   googleSpreadsheet.url(url);
   googleSpreadsheet.load(function(data) {
-    console.log(data);
     //doug
     bdata[0][0] = parseInt(data.data[5]);
     //toilet
@@ -69,7 +127,6 @@ function loadData(){
     bdata[3][0] = parseInt(data.data[15]);
     //opt 5
     bdata[4][0] = parseInt(data.data[19]);
-    console.log(bdata);
     b_animate();
     updateTotals();
     //load data again in 500ms
@@ -81,14 +138,15 @@ function loadData(){
 
 
 function addButtonListener(){
-   var button = document.getElementById("buttonid");
-    if(button.addEventListener){
-         button.addEventListener("click", function() {
-           clearInterval(dataInterval);});
-    } else {
-         button.attachEvent("click", function() {
-           clearInterval(dataInterval);});
-    };
+
+    var button = document.getElementById("buttonid");
+  if(button.addEventListener){
+          button.addEventListener("click", function() {
+            clearInterval(dataInterval);});
+     } else {
+          button.attachEvent("click", function() {
+            clearInterval(dataInterval);});
+ };
 }
 
 
