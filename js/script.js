@@ -21,7 +21,7 @@ window.onload = function () {
   winningImage = Raphael("winningImage");
   totals = Raphael("total");
   bars = Raphael("holder");
-  c = bars.barchart(10, 10, 800, 450, bdata, { colors:custom_colors, stretch:false, labels:[["one"], ["two"], ["3"], ["4"], ["5"]]});
+  c = bars.barchart(0, 0, 800, 450, bdata, { colors:custom_colors, stretch:false, labels:[["one"], ["two"], ["3"], ["4"], ["5"]]});
   addLabels();
   updateTotals();
 //  loadData();
